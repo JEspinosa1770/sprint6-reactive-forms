@@ -1,0 +1,11 @@
+<p>budget-form works!</p>
+
+<div class="budget-form">
+    @for (budget of service.services; track budget.title) {
+        <h2>{{ budget.title}}</h2>
+        <p>{{ budget.description }}</p>
+        <p>{{ budget.price }}</p>
+        <input type="checkbox">
+
+    }
+</div>
