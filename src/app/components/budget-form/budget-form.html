@@ -1,11 +1,16 @@
 <p>budget-form works!</p>
 
 <div class="budget-form">
-    @for (budget of service.services; track budget.title) {
-        <h2>{{ budget.title}}</h2>
-        <p>{{ budget.description }}</p>
-        <p>{{ budget.price }}</p>
-        <input type="checkbox">
-
-    }
+    <form [formGroup]="budgetForm">
+        @for (budget of serviceBudget.services; track budget.title) {
+            <h2>{{ budget.title}}</h2>
+            <p>{{ budget.description }}</p>
+            <p>{{ budget.price }}</p>
+            <!-- <input type="checkbox" id="budget-checked" [formControl]="budget.selected"> -->
+            <input type="checkbox" id="budget-checked" (change)="pruebas($event, budget.title)" formControlName="entrada">   
+        }
+    </form>
+</div>
+<div class="total">
+    <h2>Preu pressupostat:</h2>
 </div>
