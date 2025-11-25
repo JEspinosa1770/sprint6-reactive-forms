@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, FormControlName } from '@angular/forms';
-import { BudgetItem } from '../../models/budgetItem';
 import { BudgetServices } from '../../services/budget-services';
 
 @Component({
@@ -9,34 +8,46 @@ import { BudgetServices } from '../../services/budget-services';
   templateUrl: './budget-form.html',
   styleUrl: './budget-form.scss',
 })
-export class BudgetForm {
+
+export class BudgetForm implements OnInit {
   budgetForm: FormGroup;
-  entrada: FormControl;
-  total = 0;
+  total: number = 0;
 
   constructor(public serviceBudget: BudgetServices) {
-    this.entrada = new FormControl(false);
-    this.budgetForm = new FormGroup({
-      entrada: this.entrada
-    })
+    this.budgetForm = new FormGroup({})
   }
 
-  pruebas(event: any, title: string) {
-    this.serviceBudget.services.forEach(element => {
-      if (element.title === title) {
-        if (event.target.checked) {
-          element.selected = true 
-          this.total += element.price;
-        } else {
-          element.selected = false;
-          this.total -= element.price;
-        }
-      }
+  ngOnInit() {
+    this.serviceBudget.services.forEach(budget => {
+      this.budgetForm.addControl(
+        budget.title, 
+        new FormControl(budget.selected || false)
+      );
     });
-    console.log(this.serviceBudget)
-    console.log(this.total)
+
+    this.budgetForm.valueChanges.subscribe(() => {
+      this.calculateTotal();
+    });
   }
-  
-  // selected: FormControl;
-  
+
+  calculateTotal() {
+    this.total = 0;
+    this.serviceBudget.services.forEach(element => {
+      const control = this.budgetForm.get(element.title);
+      const isSelected = control ? control.value : false;
+
+      if (isSelected) {
+        element.selected = true 
+        this.total += element.price;
+      } 
+    });
+
+    // opción con reduce, descartada
+    // this.total = this.serviceBudget.services.reduce((acc, element) => {
+    //   const isSelected = this.budgetForm.get(element.title)?.value || false;
+    //   element.selected = isSelected;
+      
+    //   return isSelected ? acc + element.price : acc;
+    // }, 0);
+  }  
 }
