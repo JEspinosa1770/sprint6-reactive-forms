@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, FormControlName } from '@angular/forms';
 import { BudgetServices } from '../../services/budget-services';
-
+import { calculateTotal } from '../../services/calculation';
 @Component({
   selector: 'app-budget-form',
   imports: [ReactiveFormsModule],
@@ -26,21 +26,9 @@ export class BudgetForm implements OnInit {
     });
 
     this.budgetForm.valueChanges.subscribe(() => {
-      this.calculateTotal();
+      this.total = calculateTotal(this.serviceBudget, this.budgetForm);
     });
   }
-
-  calculateTotal() {
-    this.total = 0;
-    this.serviceBudget.services.forEach(element => {
-      const control = this.budgetForm.get(element.title);
-      const isSelected = control ? control.value : false;
-
-      if (isSelected) {
-        element.selected = true 
-        this.total += element.price;
-      } 
-    });
 
     // opción con reduce, descartada
     // this.total = this.serviceBudget.services.reduce((acc, element) => {
@@ -49,5 +37,5 @@ export class BudgetForm implements OnInit {
       
     //   return isSelected ? acc + element.price : acc;
     // }, 0);
-  }  
-}
+}  
+
