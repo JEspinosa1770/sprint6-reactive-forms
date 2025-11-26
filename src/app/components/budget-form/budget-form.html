@@ -6,7 +6,8 @@
     <div class="budget-form container">
         <form [formGroup]="budgetForm">
             @for (budget of serviceBudget.services; track budget.title) {
-                <div class="budget-card">
+                <app-budget [budget]="budget"></app-budget>
+                <!-- <div class="budget-card">
                     <div class="row align-items-center">
                         <div class="col-lg-5 col-md-5 col-12">
                             <h3 class="card-title">{{ budget.title}}</h3>
@@ -25,7 +26,7 @@
                             </div>
                         </div>
                     </div>                   
-                </div>
+                </div> -->
             }
         </form>
 

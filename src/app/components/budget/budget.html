@@ -1,1 +1,23 @@
-<p>budget works!</p>
+
+<div class="budget-card">
+    <div class="row align-items-center">
+        <div class="col-lg-5 col-md-5 col-12">
+            <h3 class="card-title">{{ budget().title}}</h3>
+            <h6 class="car-subtitle">{{ budget().description }}</h6>
+        </div>
+        <div class="col-lg-4 col-md-3 col-6 text-center">
+            <div class="price-wrapper">
+                <h3 class="price">{{ budget().price }}</h3>
+                <h5 class="currency"> €</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <div class="checkbox-wrapper">
+                <input type="checkbox" [id]="'budget-' + budget().title" [formControlName]="budget().title" aria-label="checkbox" class="budget-checkbox">
+                <label [for]="'budget-' + budget().title" class="checkbox-label">Afegir</label>
+            </div>
+        </div>
+    </div>                   
+</div>
+
+
