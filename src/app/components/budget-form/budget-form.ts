@@ -30,5 +30,9 @@ export class BudgetForm implements OnInit {
       this.total = calculateTotal(this.serviceBudget, this.budgetForm);
     });
   }
+
+  getControl(name: string): FormControl<boolean | null> {
+    return this.budgetForm.get(name) as FormControl<boolean | null>;
+  }
 }  
 

@@ -6,7 +6,7 @@
     <div class="budget-form container">
         <form [formGroup]="budgetForm">
             @for (budget of serviceBudget.services; track budget.title) {
-                <app-budget [budget]="budget"></app-budget>
+                <app-budget [budget]="budget" [control]="getControl(budget.title)"></app-budget>
                 <!-- <div class="budget-card">
                     <div class="row align-items-center">
                         <div class="col-lg-5 col-md-5 col-12">
