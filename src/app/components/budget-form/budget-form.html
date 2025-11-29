@@ -1,37 +1,17 @@
 <div class="budget-container">
-    <div class="header-section text-center">  <!-- bg-info bg-gradient  bg-opacity-10 --> 
+    <div class="header-section text-center"> 
         <h1 class="title">Aconsegueix la millor qualitat</h1>
     </div>
     
     <div class="budget-form container">
         <form [formGroup]="budgetForm">
-            @for (budget of serviceBudget.services; track budget.title) {
+            @for (budget of serviceBudget.services(); track budget.title) {
                 <app-budget [budget]="budget" [control]="getControl(budget.title)"></app-budget>
-                <!-- <div class="budget-card">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5 col-md-5 col-12">
-                            <h3 class="card-title">{{ budget.title}}</h3>
-                            <h6 class="car-subtitle">{{ budget.description }}</h6>
-                        </div>
-                        <div class="col-lg-4 col-md-3 col-6 text-center">
-                            <div class="price-wrapper">
-                                <h3 class="price">{{ budget.price }}</h3>
-                                <h5 class="currency"> €</h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" [id]="'budget-' + budget.title" [formControlName]="budget.title" aria-label="checkbox" class="budget-checkbox">
-                                <label [for]="'budget-' + budget.title" class="checkbox-label">Afegir</label>
-                            </div>
-                        </div>
-                    </div>                   
-                </div> -->
             }
         </form>
 
         <div class="total-section text-end">
-            <h3 class="total-text">Preu pressupostat:  <span class="total-amount">{{ total }} </span><span class="total-currency">€</span></h3>
+            <h3 class="total-text">Preu pressupostat:  <span class="total-amount">{{ calculateTotal.total() }} </span><span class="total-currency">€</span></h3>
         </div>
     </div>
 </div>

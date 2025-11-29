@@ -14,16 +14,17 @@
         <div class="col-lg-3 col-md-4 col-6">
             <div class="checkbox-wrapper">
                 <input type="checkbox" [id]="'budget-' + budget().title" [formControl]="control()" aria-label="checkbox" class="budget-checkbox">
-                <!-- <input type="checkbox" [id]="'budget-' + budget().title" [formControl]="control()" [formControlName]="budget().title" aria-label="checkbox" class="budget-checkbox"> -->
                 <label [for]="'budget-' + budget().title" class="checkbox-label">Afegir</label>
             </div>
         </div>
     </div>
-    <!-- @if (budget().extra) {
+
+    @if (showPanel()) {
         <div>
-
+            <app-panel></app-panel>
+            <!-- <h2>EXTRA {{ budget().title }}</h2> -->
         </div>
-    } -->
+    } @else {
+        <h2> </h2>
+    }
 </div>
-
-

@@ -1,16 +1,20 @@
-import { BudgetServices } from './budget-services';
-import { FormGroup } from '@angular/forms';
-  
-export function calculateTotal(serviceBudget: BudgetServices, budgetForm: FormGroup) {
-  let total: number = 0;
-  serviceBudget.services.forEach(element => {
-    const control = budgetForm.get(element.title);
-    const isSelected = control ? control.value : false;
+import { computed, Injectable } from '@angular/core';
+import { BudgetServices } from './budget-services'; 
+@Injectable({
+  providedIn: 'root',
+})
 
-    if (isSelected) {
-      element.selected = true 
-      total += element.price;
-    } 
+export class CalculateTotal {
+
+  constructor(private serviceBudget: BudgetServices) {}
+
+  total = computed(() => {
+    let sum = 0;
+    this.serviceBudget.services().forEach(element => {
+      if (element.selected) {
+        sum += element.price;
+      }
+    });
+    return sum;
   });
-  return total;
 }
