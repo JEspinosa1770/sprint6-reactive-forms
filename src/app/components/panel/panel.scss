@@ -72,7 +72,6 @@ root {
     border-color: var(--error-color);
   }
 
-  /* Ocultar flechas del input number en Chrome, Safari, Edge */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
