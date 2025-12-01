@@ -1,1 +1,45 @@
-<p>panel works!</p>
+<!-- <p>panel works!</p> -->
+
+<div class="panel-container">
+  <form [formGroup]="panelForm">
+    <div class="panel-row">
+      <label for="pages" class="panel-label">Nombre de pàgines</label>
+      <div class="panel-controls">
+        <button type="button" class="panel-btn" (click)="decrementPages()" [disabled]="pagesControl.value === 1 " aria-label="Disminuir páginas"> - </button>
+        <input type="number" id="pages" class="panel-input" formControlName="pages" min="1" max="100" aria-label="Número de páginas">
+        <button type="button" class="panel-btn" (click)="incrementPages()" [disabled]="pagesControl.value === 100" aria-label="Aumentar páginas"> + </button>
+      </div>
+    </div>
+
+    <div class="panel-row">
+      <label for="languages" class="panel-label">Nombre de llenguatges</label>
+      <div class="panel-controls">
+        <button type="button" class="panel-btn" (click)="decrementLanguages()" [disabled]="languagesControl.value === 1" aria-label="Disminuir idiomas"> - </button>
+        <input type="number" id="languages" class="panel-input" formControlName="languages" min="1" max="50" aria-label="Número de idiomas">
+        <button type="button" class="panel-btn" (click)="incrementLanguages()" [disabled]="languagesControl.value === 50" aria-label="Aumentar idiomas"> + </button>
+      </div>
+    </div>
+
+    @if (pagesControl.invalid && pagesControl.touched) {
+      <div class="error-message">
+        @if (pagesControl.errors?.['min']) {
+          <small>El mínim de pàgines és 1</small>
+        }
+        @if (pagesControl.errors?.['max']) {
+          <small>El màxim de pàgines és 100</small>
+        }
+      </div>
+    }
+
+    @if (languagesControl.invalid && languagesControl.touched) {
+      <div class="error-message">
+        @if (languagesControl.errors?.['min']) {
+          <small>El mínim de llenguatges és 1</small>
+        }
+        @if (languagesControl.errors?.['max']) {
+          <small>El màxim de llenguatges és 50</small>
+        }
+      </div>
+    }
+  </form>
+</div>

@@ -1,0 +1,90 @@
+root {
+    --backcolor-gral: #f8f9fa;
+    --error-color: #dc3545;
+    --backcolor-button: white;
+    --backcolor-button-hover: #007bff;
+    --text-color: #333;
+}
+
+.panel-container {
+  padding: 1.5rem;
+  background-color: var(--backcolor-gral);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.panel-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.panel-label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.panel-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.panel-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background-color: var(--backcolor-button);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.panel-input {
+  width: 60px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.25rem;
+  font-size: 16px;
+
+  &:invalid {
+    border-color: var(--error-color);
+  }
+
+  /* Ocultar flechas del input number en Chrome, Safari, Edge */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.error-message {
+  margin-top: 0.5rem;
+  
+  small {
+    color: var(--error-color);
+    font-size: 0.875rem;
+  }
+}
