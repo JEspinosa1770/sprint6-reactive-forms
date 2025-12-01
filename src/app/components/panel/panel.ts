@@ -3,6 +3,7 @@ import { BudgetItem } from '../../models/budgetItem';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PanelServices } from '../../services/panel-services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import 'bootstrap';
 
 @Component({
   selector: 'app-panel',

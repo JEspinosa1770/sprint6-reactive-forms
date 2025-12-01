@@ -10,6 +10,35 @@
             }
         </form>
 
+        <div class="modal fade" id="pagesModal" tabindex="-1" aria-labelledby="pagesModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h1 class="modal-title fs-4 fw-bold" id="pagesModalLabel">Número de pàgines</h1>
+                        <button type="button" class="btn-close position-absolute end-0 me-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">Afegeix les pàgines que tindrà el teu projecte</p>
+                        <p class="text-center">El cost de cada pàgina extra és de 30€</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="lenguagesModal" tabindex="-1" aria-labelledby="lenguagesModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h1 class="modal-title fs-4 fw-bold" id="lenguagesModalLabel">Número de llenguatges</h1>
+                        <button type="button" class="btn-close position-absolute end-0 me-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">Afegeix els llenguatges que tindrà el teu projecte</p>
+                        <p class="text-center">El cost de cada llenguatge extra és de 30€</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="total-section text-end">
             <h3 class="total-text">Preu pressupostat:  <span class="total-amount">{{ calculateTotal.total() }} </span><span class="total-currency">€</span></h3>
         </div>

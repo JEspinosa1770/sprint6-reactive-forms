@@ -1,21 +1,22 @@
-root {
-    --backcolor-gral: #f8f9fa;
-    --error-color: #dc3545;
-    --backcolor-button: white;
-    --backcolor-button-hover: #007bff;
-    --text-color: #333;
-}
 
+$backcolor-gral: #f8f9fa;
+$borders: #ccc;
+$error-color: #dc3545;
+$backcolor-button: white;
+$text-color: #333;
+$backcolor-button-hover: #007bff;
+
+  
 .panel-container {
   padding: 1.5rem;
-  background-color: var(--backcolor-gral);
+  background-color: $backcolor-gral;
   border-radius: 8px;
   margin-top: 1rem;
 }
 
 .panel-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 1rem;
 
@@ -26,7 +27,8 @@ root {
 
 .panel-label {
   font-weight: 500;
-  color: var(--text-color);
+  color: $text-color;
+  margin-right: 1rem;
 }
 
 .panel-controls {
@@ -38,8 +40,8 @@ root {
 .panel-btn {
   width: 32px;
   height: 32px;
-  border: 1px solid #ccc;
-  background-color: var(--backcolor-button);
+  border: 1px solid $borders;
+  background-color: $backcolor-button;
   border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
@@ -49,9 +51,9 @@ root {
   transition: all 0.2s;
 
   &:hover:not(:disabled) {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
+    background-color: $backcolor-button-hover;
+    color: $backcolor-button;
+    border-color: $backcolor-button-hover;
   }
 
   &:disabled {
@@ -63,13 +65,13 @@ root {
 .panel-input {
   width: 60px;
   text-align: center;
-  border: 1px solid #ccc;
+  border: 1px solid $borders;
   border-radius: 4px;
   padding: 0.25rem;
   font-size: 16px;
 
   &:invalid {
-    border-color: var(--error-color);
+    border-color: $error-color;
   }
 
   &::-webkit-outer-spin-button,
@@ -83,7 +85,20 @@ root {
   margin-top: 0.5rem;
   
   small {
-    color: var(--error-color);
+    color: $error-color;
     font-size: 0.875rem;
+  }
+}
+
+.info-btn {
+  display: flex;
+  margin-right: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+
+  &:hover {
+    fill: $backcolor-button-hover;
   }
 }
