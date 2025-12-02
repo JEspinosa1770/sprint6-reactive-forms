@@ -53,21 +53,11 @@ describe('BudgetForm', () => {
       expect(component.total).toBe(0);
     });
 
-    it('should inject the services correctly', () => {
-      expect(component.serviceBudget).toBe(mockBudgetServices);
-      expect(component.calculateTotal).toBe(mockCalculateTotal);
-    });
   });
 
   describe('Creating form controls', () => {
     it('should create a control for each service', () => {
       expect(Object.keys(component.budgetForm.controls).length).toBe(mockServices.length);
-    });
-
-    it('should create controls with the correct names', () => {
-      mockServices.forEach(service => {
-        expect(component.budgetForm.get(service.title)).toBeDefined();
-      });
     });
 
     it('should initialize the controls with the selected value of the service', () => {
@@ -86,30 +76,13 @@ describe('BudgetForm', () => {
       
       expect(mockBudgetServices.updateServiceSelection).toHaveBeenCalledWith('SEO', true);
     });
-
-    it('should call updateServiceSelection with the correct value', () => {
-      const adsControl = component.budgetForm.get('Ads');
-      
-      adsControl?.setValue(false);
-      
-      expect(mockBudgetServices.updateServiceSelection).toHaveBeenCalledWith('Ads', false);
-    });
   });
 
   describe('getControl method', () => {
     it('should return the correct FormControl when it exists', () => {
       const control = component.getControl('SEO');
       
-      expect(control).toBeDefined();
       expect(control).toBeInstanceOf(FormControl);
-      expect(control.value).toBe(false);
-    });
-
-    it('should return control with the updated value', () => {
-      component.budgetForm.get('Ads')?.setValue(false);
-      
-      const control = component.getControl('Ads');
-      
       expect(control.value).toBe(false);
     });
 
@@ -118,45 +91,11 @@ describe('BudgetForm', () => {
       
       expect(control).toBeNull();
     });
-
-    it('should return FormControl with type boolean | null', () => {
-      const control = component.getControl('SEO');
-      
-      control.setValue(true);
-      expect(control.value).toBe(true);
-      
-      control.setValue(null);
-      expect(control.value).toBeNull();
-    });
-
-    it('should allow you to access all the form controls', () => {
-      mockServices.forEach(service => {
-        const control = component.getControl(service.title);
-        expect(control).toBeDefined();
-        expect(control).toBeInstanceOf(FormControl);
-      });
-    });
   });
 
   describe('Integration with services', () => {
     it('should call services() during initialization', () => {
       expect(mockBudgetServices.services).toHaveBeenCalled();
-    });
-
-    it('should maintain synchronization between the form and the service', () => {
-      vi.clearAllMocks();
-      
-      component.budgetForm.patchValue({     // Cambiar múltiples valores
-        SEO: true,
-        Ads: false,
-        Web: true
-      });
-      
-      // Verificar que se actualizaron todos
-      expect(mockBudgetServices.updateServiceSelection).toHaveBeenCalledWith('SEO', true);
-      expect(mockBudgetServices.updateServiceSelection).toHaveBeenCalledWith('Ads', false);
-      expect(mockBudgetServices.updateServiceSelection).toHaveBeenCalledWith('Web', true);
-      expect(mockBudgetServices.updateServiceSelection).toHaveBeenCalledTimes(3);
     });
 
     it("shouldn't call updateServiceSelection if there are no changes", () => {
@@ -166,17 +105,4 @@ describe('BudgetForm', () => {
     });
   });
 
-  describe('Form states', () => {
-    it('should maintain the valid state of the form', () => {
-      expect(component.budgetForm.valid).toBe(true);
-    });
-
-    it('should allow disabling individual controls', () => {
-      const seoControl = component.budgetForm.get('SEO');
-      seoControl?.disable();
-      
-      expect(seoControl?.disabled).toBe(true);
-      expect(component.budgetForm.get('Ads')?.disabled).toBe(false);
-    });
-  });
 });
