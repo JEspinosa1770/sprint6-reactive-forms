@@ -1,23 +1,146 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { describe, it } from 'vitest';
 import { Budget } from './budget';
+import { PanelServices } from '../../services/panel-services';
+import { BudgetItem } from '../../models/budgetItem';
+import { FormControl } from '@angular/forms';
 
 describe('Budget', () => {
   let component: Budget;
   let fixture: ComponentFixture<Budget>;
+  let mockPanelService: any;
 
   beforeEach(async () => {
+    mockPanelService = {
+      reset: vi.fn()
+    };
+
     await TestBed.configureTestingModule({
-      imports: [Budget]
-    })
-    .compileComponents();
+      imports: [Budget],
+      providers: [
+        { provide: PanelServices, useValue: mockPanelService }
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Budget);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Initialization', () => {
+    it('should create the component with the correct default values', () => {
+      expect(component).toBeTruthy();
+      
+      const defaultBudget = component.budget();
+      expect(defaultBudget).toEqual({
+        title: '',
+        description: '',
+        price: 0,
+        selected: false,
+        extra: false
+      });
+    });
+  });
+
+  describe('Input budget', () => {
+    it('should accept BudgetItem type values', () => {
+      const budgetData: BudgetItem = {
+        title: 'SEO',
+        description: 'Optimización SEO',
+        price: 300,
+        selected: true,
+        extra: false
+      };
+
+      fixture.componentRef.setInput('budget', budgetData);
+      
+      expect(component.budget()).toEqual(budgetData);
+    });
+
+    it('budget should update when the input changes', () => {
+      const newBudget: BudgetItem = {
+        title: 'Web',
+        description: 'Desarrollo web',
+        price: 500,
+        selected: false,
+        extra: true
+      };
+
+      fixture.componentRef.setInput('budget', newBudget);
+      
+      expect(component.budget().title).toBe('Web');
+      expect(component.budget().price).toBe(500);
+    });
+  });
+
+  describe('Input control (required)', () => {
+    it('should accept a FormControl<boolean | null>', () => {
+      const formControl = new FormControl<boolean | null>(false);
+      
+      fixture.componentRef.setInput('control', formControl);
+      
+      expect(component.control()).toBe(formControl);
+    });
+  });
+
+  describe('Computed showPanel', () => {
+    beforeEach(() => {
+      fixture.componentRef.setInput('control', new FormControl(false));
+    });
+
+    it('should return true when selected=true and extra=true', () => {
+      const budgetData: BudgetItem = {
+        title: 'SEO',
+        description: 'SEO',
+        price: 300,
+        selected: true,
+        extra: true
+      };
+
+      fixture.componentRef.setInput('budget', budgetData);
+      fixture.detectChanges();
+      
+      expect(component.showPanel()).toBe(true);
+    });
+
+    it('should be reactive to budget changes', () => {
+      const budgetData: BudgetItem = {
+        title: 'Web',
+        description: 'Web',
+        price: 500,
+        selected: false,
+        extra: true
+      };
+
+      fixture.componentRef.setInput('budget', budgetData);
+      fixture.detectChanges();
+      expect(component.showPanel()).toBe(false);
+
+      budgetData.selected = true;
+      fixture.componentRef.setInput('budget', { ...budgetData });
+      fixture.detectChanges();
+      expect(component.showPanel()).toBe(true);
+    });
+  });
+
+  describe('Effect with panelService.reset()', () => {
+    beforeEach(() => {
+      fixture.componentRef.setInput('control', new FormControl(false));
+      vi.clearAllMocks();
+    });
+
+    it('should call reset() when extra=true and selected=false', () => {
+      const budgetData: BudgetItem = {
+        title: 'SEO',
+        description: 'SEO',
+        price: 300,
+        selected: false,
+        extra: true
+      };
+
+      fixture.componentRef.setInput('budget', budgetData);
+      fixture.detectChanges();
+      
+      expect(mockPanelService.reset).toHaveBeenCalled();
+    });
   });
 });
