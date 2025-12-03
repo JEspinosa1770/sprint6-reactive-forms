@@ -32,4 +32,10 @@ export class BudgetServices {
       services.map(service => service.title === title ? { ...service, selected } : service)
     );
   }
+
+  checkSelected(serviceBudget: BudgetServices) {
+    let someSelected: boolean = false;
+    serviceBudget.services().forEach(budget => { if (budget.selected) someSelected = true; });
+    return someSelected
+  }
 }

@@ -9,6 +9,31 @@
                 <app-budget [budget]="budget" [control]="getControl(budget.title)"></app-budget>
             }
         </form>
+        
+        <div class="total-section text-end">
+            <h3 class="total-text">Preu pressupostat:  <span class="total-amount">{{ calculateTotal.total() }} </span><span class="total-currency">€</span></h3>
+        </div>
+
+        <form [formGroup]="budgetList" (ngSubmit)="onSubmitBudgetList()">
+            <div class="budget-list-card">
+                <h3 class="list-card-title">Demanar pressupost</h3>
+                <div class="form-wrapper">
+                    <input type="text" id="name-user" formControlName="name-user" placeholder="Nom i cognom" aria-label="Nom">
+                    <input type="tel" id="phone-user" formControlName="phone-user" placeholder="Telèfon" aria-label="Telèfon">
+                    <input type="email" id="email-user" formControlName="email-user" placeholder="Email" aria-label="Email">
+    
+                    <button type="submit" class="submit-button">Sol·licitar pressupost<span class="arrow-icon">→</span></button>
+                </div>
+<div>
+    <p>Debug: {{ this.serviceBudget.checkSelected(this.serviceBudget) }}</p>
+</div>
+                @if (!this.serviceBudget.checkSelected(this.serviceBudget) && buttonSubmitClicked) {
+                    <div class="form-error-message">
+                        <small>S'ha de triar com a mínim un servei</small>
+                    </div>
+                }
+            </div>
+        </form> 
 
         <div class="modal fade" id="pagesModal" tabindex="-1" aria-labelledby="pagesModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -37,10 +62,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="total-section text-end">
-            <h3 class="total-text">Preu pressupostat:  <span class="total-amount">{{ calculateTotal.total() }} </span><span class="total-currency">€</span></h3>
         </div>
     </div>
 </div>
