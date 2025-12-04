@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, FormControlName, Validators } from '@angular/forms';
 import { BudgetServices } from '../../services/budget-services';
 import { CalculateTotal } from '../../services/calculation';
 import { Budget } from '../budget/budget';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BudgetListItem } from '../../models/budgetListItem';
 @Component({
   selector: 'app-budget-form',
   imports: [ReactiveFormsModule, Budget],
@@ -16,13 +17,15 @@ export class BudgetForm {
   budgetList: FormGroup;
   total: number = 0;
   buttonSubmitClicked: boolean = false;
+  someSelected: boolean = false;
+  finalBudget: BudgetListItem | undefined;
 
   constructor(public serviceBudget: BudgetServices, public calculateTotal: CalculateTotal) {
     this.budgetForm = new FormGroup({});
     this.budgetList = new FormGroup({
-      'name-user': new FormControl('', [Validators.required]),
-      'phone-user': new FormControl('', [Validators.required]),
-      'email-user': new FormControl('', [Validators.required, Validators.email])
+      'name_user': new FormControl('', [Validators.required]),
+      'phone_user': new FormControl('', [Validators.required]),
+      'email_user': new FormControl('', [Validators.required, Validators.email])
 });
     
     this.serviceBudget.services().forEach(budget => {
@@ -51,9 +54,11 @@ export class BudgetForm {
 
   onSubmitBudgetList(): void {
     this.buttonSubmitClicked = true;
-    const someSelected = this.serviceBudget.checkSelected(this.serviceBudget)
-    if (this.budgetList.valid && someSelected) {
-      console.log('Formulario enviado:', this.budgetList.value);
+    const budgetCheckeds = this.serviceBudget.checkSelected(this.serviceBudget.services());
+    this.someSelected = budgetCheckeds.result;
+    if (this.budgetList.valid && this.someSelected) {
+      this.finalBudget = this.serviceBudget.budgetListArray(budgetCheckeds.arr, this.budgetList, this.calculateTotal.total())
+      console.log('Formulario enviado:', this.finalBudget);
     } else {
       console.log('Formulario inválido');
       this.budgetList.markAllAsTouched();

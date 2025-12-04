@@ -1,4 +1,4 @@
-import { Component, effect, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PanelServices } from '../../services/panel-services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

@@ -1,6 +1,9 @@
 import { Injectable, signal } from '@angular/core';
 import { BudgetItem } from '../models/budgetItem';
+import { BudgetListItem } from '../models/budgetListItem';
+import { FormGroup } from '@angular/forms';
 
+let recordListBudgets: BudgetListItem[] = [];
 @Injectable({
   providedIn: 'root',
 })
@@ -33,9 +36,22 @@ export class BudgetServices {
     );
   }
 
-  checkSelected(serviceBudget: BudgetServices) {
-    let someSelected: boolean = false;
-    serviceBudget.services().forEach(budget => { if (budget.selected) someSelected = true; });
-    return someSelected
+  checkSelected(serviceBudgetProp: BudgetItem[]) {
+    const budgetsSelecteds: BudgetItem[] = serviceBudgetProp.filter(element => element.selected);
+    return { result: (serviceBudgetProp.some((budget: BudgetItem) => budget.selected)), arr: budgetsSelecteds };
   }
+
+  budgetListArray(budgetArray: BudgetItem[], dataUser: FormGroup, total: number) {
+    let budgetListItem: BudgetListItem = {
+      name: dataUser.value.name_user,
+      phone: dataUser.value.phone_user,
+      email: dataUser.value.email_user,
+      budgets: budgetArray,
+      total: total,
+      time: new Date().toISOString()
+    }
+    recordListBudgets.push(budgetListItem);
+console.log(recordListBudgets)
+    return budgetListItem;
+  } 
 }

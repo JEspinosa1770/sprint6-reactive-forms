@@ -18,18 +18,23 @@
             <div class="budget-list-card">
                 <h3 class="list-card-title">Demanar pressupost</h3>
                 <div class="form-wrapper">
-                    <input type="text" id="name-user" formControlName="name-user" placeholder="Nom i cognom" aria-label="Nom">
-                    <input type="tel" id="phone-user" formControlName="phone-user" placeholder="Telèfon" aria-label="Telèfon">
-                    <input type="email" id="email-user" formControlName="email-user" placeholder="Email" aria-label="Email">
+                    <input type="text" id="name-user" formControlName="name_user" placeholder="Nom i cognom" aria-label="Nom">
+                    <input type="tel" id="phone-user" formControlName="phone_user" placeholder="Telèfon" aria-label="Telèfon">
+                    <input type="email" id="email-user" formControlName="email_user" placeholder="Email" aria-label="Email">
     
                     <button type="submit" class="submit-button">Sol·licitar pressupost<span class="arrow-icon">→</span></button>
                 </div>
 <div>
-    <p>Debug: {{ this.serviceBudget.checkSelected(this.serviceBudget) }}</p>
+    <p>Debug: {{ this.finalBudget?.name }}</p>
 </div>
-                @if (!this.serviceBudget.checkSelected(this.serviceBudget) && buttonSubmitClicked) {
+                @if (!someSelected && buttonSubmitClicked) {
                     <div class="form-error-message">
                         <small>S'ha de triar com a mínim un servei</small>
+                    </div>
+                }
+                @if (!this.budgetList.valid && buttonSubmitClicked) {
+                    <div class="form-error-message">
+                        <small>S'han d'omplir tots els camps de dades</small>
                     </div>
                 }
             </div>
