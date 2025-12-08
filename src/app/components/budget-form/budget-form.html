@@ -1,15 +1,15 @@
 <div class="budget-container">
-    <div class="header-section text-center"> 
+    <div class="header-section text-center">
         <h1 class="title">Aconsegueix la millor qualitat</h1>
     </div>
-    
+
     <div class="budget-form container">
         <form [formGroup]="budgetForm">
             @for (budget of serviceBudget.services(); track budget.title) {
                 <app-budget [budget]="budget" [control]="getControl(budget.title)"></app-budget>
             }
         </form>
-        
+
         <div class="total-section text-end">
             <h3 class="total-text">Preu pressupostat:  <span class="total-amount">{{ calculateTotal.total() }} </span><span class="total-currency">€</span></h3>
         </div>
@@ -21,7 +21,7 @@
                     <input type="text" id="name-user" formControlName="name_user" placeholder="Nom i cognom" aria-label="Nom">
                     <input type="tel" id="phone-user" formControlName="phone_user" placeholder="Telèfon" aria-label="Telèfon">
                     <input type="email" id="email-user" formControlName="email_user" placeholder="Email" aria-label="Email">
-    
+
                     <button type="submit" class="submit-button">Sol·licitar pressupost<span class="arrow-icon">→</span></button>
                 </div>
 <div>
@@ -38,7 +38,7 @@
                     </div>
                 }
             </div>
-        </form> 
+        </form>
 
         <div class="modal fade" id="pagesModal" tabindex="-1" aria-labelledby="pagesModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -68,5 +68,10 @@
                 </div>
             </div>
         </div>
+        @if (serviceBudget.recordListBudgets()) {
+            @for (budgetList of serviceBudget.recordListBudgets(); track budgetList.time) {
+                <app-budget-list [budgetList]="budgetList"></app-budget-list>
+            }
+        }
     </div>
 </div>

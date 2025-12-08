@@ -5,9 +5,10 @@ import { CalculateTotal } from '../../services/calculation';
 import { Budget } from '../budget/budget';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BudgetListItem } from '../../models/budgetListItem';
+import { BudgetList } from '../budget-list/budget-list';
 @Component({
   selector: 'app-budget-form',
-  imports: [ReactiveFormsModule, Budget],
+  imports: [ReactiveFormsModule, Budget, BudgetList],
   templateUrl: './budget-form.html',
   styleUrl: './budget-form.scss',
 })
@@ -27,10 +28,10 @@ export class BudgetForm {
       'phone_user': new FormControl('', [Validators.required]),
       'email_user': new FormControl('', [Validators.required, Validators.email])
 });
-    
+
     this.serviceBudget.services().forEach(budget => {
       this.budgetForm.addControl(
-        budget.title, 
+        budget.title,
         new FormControl(budget.selected || false)
       );
     });
@@ -45,7 +46,7 @@ export class BudgetForm {
           }
           this.buttonSubmitClicked = false;
         });
-      }); 
+      });
   }
 
   getControl(name: string): FormControl<boolean | null> {
@@ -64,5 +65,5 @@ export class BudgetForm {
       this.budgetList.markAllAsTouched();
     }
   }
-}  
+}
 
