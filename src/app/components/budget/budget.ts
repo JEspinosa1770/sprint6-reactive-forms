@@ -12,20 +12,20 @@ import { PanelServices } from '../../services/panel-services';
 })
 
 export class Budget {
-  budget = input<BudgetItem>({ title: '', description: '', price: 0, selected: false, extra: false});
+  budget = input<BudgetItem>({ title: '', description: '', price: 0, selected: false, extra: false, pages: 0, languages: 0});
   control = input.required<FormControl<boolean | null>>();
 
   constructor(private panelService: PanelServices) {
     effect(() => {
       const budgetData = this.budget();
-      
+
       if (budgetData.extra && !budgetData.selected) {
         this.panelService.reset();
       }
     });
   }
 
-  showPanel = computed(() => { 
+  showPanel = computed(() => {
     const point = this.budget();
     return point.selected && point.extra;
   })

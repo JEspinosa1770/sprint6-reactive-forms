@@ -3,5 +3,7 @@ export interface BudgetItem {
   description: string,
   price: number,
   selected: boolean,
-  extra: boolean
+  extra: boolean,
+  pages: number,
+  languages: number
 }
