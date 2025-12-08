@@ -1,13 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { BudgetItem } from '../models/budgetItem';
 import { BudgetListItem } from '../models/budgetListItem';
 import { FormGroup } from '@angular/forms';
 
-let recordListBudgets: BudgetListItem[] = [];
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetServices {
+  recordListBudgets = signal<BudgetListItem[]>([]);
 
   services  = signal<BudgetItem[]>([
     { title: "seo",
@@ -30,8 +30,10 @@ export class BudgetServices {
     }
   ]);
 
+  totalBudgets = computed(() => this.recordListBudgets().length);
+
   updateServiceSelection(title: string, selected: boolean) {
-    this.services.update(services => 
+    this.services.update(services =>
       services.map(service => service.title === title ? { ...service, selected } : service)
     );
   }
@@ -42,7 +44,7 @@ export class BudgetServices {
   }
 
   budgetListArray(budgetArray: BudgetItem[], dataUser: FormGroup, total: number) {
-    let budgetListItem: BudgetListItem = {
+    const budgetListItem: BudgetListItem = {
       name: dataUser.value.name_user,
       phone: dataUser.value.phone_user,
       email: dataUser.value.email_user,
@@ -50,8 +52,11 @@ export class BudgetServices {
       total: total,
       time: new Date().toISOString()
     }
-    recordListBudgets.push(budgetListItem);
-console.log(recordListBudgets)
+
+    this.recordListBudgets.update(budgets => [...budgets, budgetListItem]);
+
+    // recordListBudgets.push(budgetListItem);
+console.log(this.recordListBudgets())
     return budgetListItem;
-  } 
+  }
 }
