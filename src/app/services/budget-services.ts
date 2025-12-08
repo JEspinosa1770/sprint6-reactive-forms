@@ -45,17 +45,18 @@ export class BudgetServices {
 
   budgetListArray(budgetArray: BudgetItem[], dataUser: FormGroup, total: number) {
     const budgetListItem: BudgetListItem = {
+      id: 0,
       name: dataUser.value.name_user,
       phone: dataUser.value.phone_user,
       email: dataUser.value.email_user,
       budgets: budgetArray,
       total: total,
       time: new Date().toISOString()
+      // FALTA AÑADIR DATOS EXTRA DE WEB - páginas e idiomas
     }
 
     this.recordListBudgets.update(budgets => [...budgets, budgetListItem]);
 
-    // recordListBudgets.push(budgetListItem);
 console.log(this.recordListBudgets())
     return budgetListItem;
   }

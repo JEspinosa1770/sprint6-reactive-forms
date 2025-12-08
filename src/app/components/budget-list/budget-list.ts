@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { BudgetItem } from '../../models/budgetItem';
+import { BudgetListItem } from '../../models/budgetListItem';
 
 @Component({
   selector: 'app-budget-list',
@@ -7,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './budget-list.scss',
 })
 export class BudgetList {
+  budgetList = input<BudgetListItem>({ id: 0, name: '', phone: 999, email: "", budgets: [], total: 0, time: ""});
 
 }
