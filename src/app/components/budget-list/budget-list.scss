@@ -40,15 +40,12 @@ $border-radius: 12px;
     }
 }
 
-.price-wrapper {
-    // display: inline-flex;
-    // align-items: baseline;
-    // gap: 0.2rem;
-
+.selections {
     .services-selected-title {
         font-size: 1rem;
         font-weight: 800;
         color: $text-dark;
+        text-align: start;
 
         @media (max-width: 767px) {
             font-size: 0.9rem;
@@ -56,10 +53,18 @@ $border-radius: 12px;
     }
 
     .services-selected {
+        text-align: start;
+        margin: 0;
         font-size: 0.8rem;
-        font-weight: 600;
+        font-weight: 700;
         color: $text-light;
     }
+}
+
+.price-wrapper {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.2rem;
 }
 
 .checkbox-wrapper {
@@ -115,8 +120,16 @@ $border-radius: 12px;
     .budget-card {
         padding: 1.5rem 1rem;
 
-        .row > div {
+        .row {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .row > div {
             margin-bottom: 1rem;
+            width: 100%;
+            border: 2px solid $border-color;
+            border-radius: 4px;
 
             &:last-child {
                 margin-bottom: 0;

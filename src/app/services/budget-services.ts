@@ -48,16 +48,19 @@ export class BudgetServices {
   }
 
   checkSelected(serviceBudgetProp: BudgetItem[]) {
-    // const budgetsSelecteds: BudgetItem[] = serviceBudgetProp.filter(element => element.selected);
-    const budgetsSelecteds: BudgetItem[] = serviceBudgetProp
-      .filter(element => element.selected === true)
-      .map(element => ({
-        ...element,
-        pages: element.extra ? this.panelService.pages() : 0,
-        languages: element.extra ? this.panelService.languages() : 0
-      }));
+    const budgetsSelecteds: BudgetItem[] = serviceBudgetProp.reduce((acc, element) => {
+      const result = element.selected === true
+        ? [...acc,
+            {...element,
+              pages: element.extra ? this.panelService.pages() : 0,
+              languages: element.extra ? this.panelService.languages() : 0
+            }
+          ]
+        : acc;
+      return result;
+    }, [] as BudgetItem[]);
 
-    return { result: (serviceBudgetProp.some((budget: BudgetItem) => budget.selected)), arr: budgetsSelecteds };
+    return { result: budgetsSelecteds.length > 0, arr: budgetsSelecteds };
   }
 
   budgetListArray(budgetArray: BudgetItem[], dataUser: FormGroup, total: number) {
@@ -69,7 +72,6 @@ export class BudgetServices {
       budgets: budgetArray,
       total: total,
       time: new Date().toISOString()
-      // FALTA AÑADIR DATOS EXTRA DE WEB - páginas e idiomas
     }
 
     this.recordListBudgets.update(budgets => [...budgets, budgetListItem]);

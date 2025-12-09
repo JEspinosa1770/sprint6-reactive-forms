@@ -1,31 +1,31 @@
 
 <div class="budget-card">
     <div class="row align-items-center">
-        <div class="col-lg-5 col-md-5 col-12">
+        <div class="col-lg-4 col-md-4 col-4">
             <h3 class="card-name">{{ budgetList().name }}</h3>
             <h6 class="card-data-user">{{ budgetList().email }}</h6>
             <h6 class="card-data-user">{{ budgetList().phone }}</h6>
         </div>
-        <div class="col-lg-4 col-md-3 col-6 text-center">
-            <div class="price-wrapper">
+        <div class="col-lg-5 col-md-5 col-5 text-center">
+            <div class="selections">
                 <h4 class="services-selected-title">Serveis contractats:</h4>
-                <h5 class="services-selected">{{ budgetList().budgets }}</h5>
-
+                @for (budgetSel of budgetList().budgets; track budgetSel.title) {
+                    @if (budgetSel.extra) {
+                        <h5 class="services-selected">- {{ budgetSel.title }} ({{ budgetSel.pages }} pàgines i {{ budgetSel.languages }} llenguatges)</h5>
+                    } @else {
+                        <h5 class="services-selected">- {{ budgetSel.title }}</h5>
+                    }
+                }
             </div>
         </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="checkbox-wrapper">
-                <!-- <input type="checkbox" [id]="'budget-' + budget().title" [formControl]="control()" aria-label="checkbox" class="budget-checkbox">
-                <label [for]="'budget-' + budget().title" class="checkbox-label">Afegir</label> -->
+        <div class="col-lg-3 col-md-3 col-3 text-center">
+            <div class="total-price">
+                <h5 class="currency">Total:</h5>
+                <div class="price-wrapper">
+                    <h3 class="price">{{ budgetList().total }}</h3>
+                    <h5 class="currency"> €</h5>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- @if (showPanel()) {
-        <div>
-            <app-panel></app-panel>
-        </div>
-    } @else {
-        <h2> </h2>
-    } -->
 </div>
