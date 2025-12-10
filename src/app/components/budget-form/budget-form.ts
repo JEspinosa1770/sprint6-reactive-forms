@@ -91,19 +91,9 @@ export class BudgetForm {
       const budgetsArray = this.budgetCheckeds().arr;
 
       const newBudget = this.serviceBudget.budgetListArray(budgetsArray, this.budgetList, this.calculateTotal.total());
-//      console.log('Formulario enviado:', newBudget);
     } else {
-//      console.log('Formulario inválido o sin servicios seleccionados');
       this.budgetList.markAllAsTouched();
     }
-
-    // const budgetCheckeds = this.serviceBudget.checkSelected(this.serviceBudget.services());
-    // this.someSelected = budgetCheckeds.result;
-    // if (this.budgetList.valid && this.someSelected) {
-    //   this.finalBudget = this.serviceBudget.budgetListArray(budgetCheckeds.arr, this.budgetList, this.calculateTotal.total())
-    // } else {
-    //   this.budgetList.markAllAsTouched();
-    // }
   }
 
   toggleSort(type: 'name' | 'date' | 'amount'): void {
