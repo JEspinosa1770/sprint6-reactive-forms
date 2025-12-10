@@ -65,8 +65,14 @@
                 </div>
             </div>
         </div>
-        @if (serviceBudget.recordListBudgets()) {
-            @for (budgetList of serviceBudget.recordListBudgets(); track budgetList.time) {
+
+        @if (serviceBudget.recordListBudgets().length > 0) {
+            <div class="btn-filter-section">
+                <button type="submit" class="btn-filter" [class.active]="isActiveSort('date')" (click)="toggleSort('date')">Data {{ getSortIcon('date') }}</button>
+                <button type="submit" class="btn-filter" [class.active]="isActiveSort('amount')" (click)="toggleSort('amount')">Import {{ getSortIcon('amount') }}</button>
+                <button type="submit" class="btn-filter" [class.active]="isActiveSort('name')" (click)="toggleSort('name')">Nom {{ getSortIcon('name') }}</button>
+            </div>
+            @for (budgetList of sortedBudgets(); track budgetList.id) {
                 <app-budget-list [budgetList]="budgetList"></app-budget-list>
             }
         }

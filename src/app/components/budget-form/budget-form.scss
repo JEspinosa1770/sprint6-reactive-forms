@@ -203,3 +203,47 @@ $border-radius: 12px;
         justify-content: center;
     }
 }
+
+.btn-filter {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    background-color: $background;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.btn-filter:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.btn-filter:active {
+    background-color: #f3f4f6;
+    border-color: #6b7280;
+}
+
+.btn-filter.active {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.btn-filter.active:hover {
+    background-color: #2563eb;
+    border-color: #1d4ed8;
+}
+
+.btn-filter:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.4);
+}
+
+.btn-filter-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
