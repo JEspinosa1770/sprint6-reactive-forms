@@ -17,8 +17,13 @@ export class BudgetForm {
   budgetForm: FormGroup;
   budgetList: FormGroup;
   total: number = 0;
-  buttonSubmitClicked: boolean = false;
-  someSelected: boolean = false;
+  buttonSubmitClicked = signal<boolean>(false);
+  someSelected = computed(() => this.serviceBudget.services().some(service => service.selected));
+  budgetCheckeds = computed(() => {
+    const result = this.serviceBudget.checkSelected(this.serviceBudget.services());
+    return result;
+  });
+
   finalBudget: BudgetListItem | undefined;
 
   sortBy = signal<'name' | 'date' | 'amount' | null>(null);
@@ -70,7 +75,7 @@ export class BudgetForm {
           if (control) {
             this.serviceBudget.updateServiceSelection(service.title, control.value);
           }
-          this.buttonSubmitClicked = false;
+          this.buttonSubmitClicked.set(false);
         });
       });
   }
@@ -80,14 +85,25 @@ export class BudgetForm {
   }
 
   onSubmitBudgetList(): void {
-    this.buttonSubmitClicked = true;
-    const budgetCheckeds = this.serviceBudget.checkSelected(this.serviceBudget.services());
-    this.someSelected = budgetCheckeds.result;
-    if (this.budgetList.valid && this.someSelected) {
-      this.finalBudget = this.serviceBudget.budgetListArray(budgetCheckeds.arr, this.budgetList, this.calculateTotal.total())
+    this.buttonSubmitClicked.set(true);
+
+    if (this.budgetList.valid && this.someSelected()) {
+      const budgetsArray = this.budgetCheckeds().arr;
+
+      const newBudget = this.serviceBudget.budgetListArray(budgetsArray, this.budgetList, this.calculateTotal.total());
+//      console.log('Formulario enviado:', newBudget);
     } else {
+//      console.log('Formulario inválido o sin servicios seleccionados');
       this.budgetList.markAllAsTouched();
     }
+
+    // const budgetCheckeds = this.serviceBudget.checkSelected(this.serviceBudget.services());
+    // this.someSelected = budgetCheckeds.result;
+    // if (this.budgetList.valid && this.someSelected) {
+    //   this.finalBudget = this.serviceBudget.budgetListArray(budgetCheckeds.arr, this.budgetList, this.calculateTotal.total())
+    // } else {
+    //   this.budgetList.markAllAsTouched();
+    // }
   }
 
   toggleSort(type: 'name' | 'date' | 'amount'): void {

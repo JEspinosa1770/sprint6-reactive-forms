@@ -24,12 +24,12 @@
 
                     <button type="submit" class="submit-button">Sol·licitar pressupost<span class="arrow-icon">→</span></button>
                 </div>
-                @if (!someSelected && buttonSubmitClicked) {
+                @if (!someSelected() && buttonSubmitClicked()) {
                     <div class="form-error-message">
                         <small>S'ha de triar com a mínim un servei</small>
                     </div>
                 }
-                @if (!this.budgetList.valid && buttonSubmitClicked) {
+                @if (!this.budgetList.valid && buttonSubmitClicked()) {
                     <div class="form-error-message">
                         <small>S'han d'omplir tots els camps de dades</small>
                     </div>
