@@ -26,11 +26,18 @@ export class BudgetForm {
 
   finalBudget: BudgetListItem | undefined;
 
+  searchText = signal<string>('');
   sortBy = signal<'name' | 'date' | 'amount' | null>(null);
   sortAscending = signal<boolean>(true);
 
   sortedBudgets = computed(() => {
-    const budgets = this.serviceBudget.recordListBudgets();
+    let budgets = this.serviceBudget.recordListBudgets();
+    const search = this.searchText().toLowerCase().trim();
+    if (search) {
+      budgets = budgets.filter(budget =>
+        budget.name.toLowerCase().includes(search)
+      );
+    }
     const sortType = this.sortBy();
     const ascending = this.sortAscending();
 
@@ -94,6 +101,11 @@ export class BudgetForm {
     } else {
       this.budgetList.markAllAsTouched();
     }
+  }
+  
+  onSearchChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchText.set(input.value);
   }
 
   toggleSort(type: 'name' | 'date' | 'amount'): void {
