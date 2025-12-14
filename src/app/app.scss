@@ -1,0 +1,35 @@
+$white: #ffffff;
+$gray-dark: #374151;
+$teal: #5cb89f;
+$teal-dark: #4da88b;
+
+
+.goIn {
+  display: flex;
+  align-items: center;
+}
+
+.gral-title {
+  font-size: 1.7rem;
+  margin: 1rem 4rem 1rem 1rem;
+}
+
+.launch-button {
+  padding: 0.3rem 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: $gray-dark;
+  background-color: $teal;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  transition: all 150ms ease-in-out;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: $teal-dark;
+    border-color: #9ca3af;
+  }
+
+}

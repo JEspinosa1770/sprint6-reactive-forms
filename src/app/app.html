@@ -1,2 +1,10 @@
 
-<app-budget-form></app-budget-form>
+@if (!this.launchApp()) {
+  <div class="goIn">
+    <h1 class="gral-title">App pressupostos serveis TIC</h1>
+    <button type="button" class="launch-button" routerLink="/budget-form">Som-hi!</button>
+  </div>
+}
+@if (this.launchApp()) {
+  <router-outlet></router-outlet>
+}

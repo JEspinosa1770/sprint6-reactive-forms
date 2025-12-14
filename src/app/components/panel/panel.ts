@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PanelServices } from '../../services/panel-services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import 'bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-panel',
@@ -12,6 +13,8 @@ import 'bootstrap';
 })
 export class Panel {
   panelForm: FormGroup;
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   constructor(public panelService: PanelServices) {
     this.panelForm = new FormGroup({
@@ -25,8 +28,47 @@ export class Panel {
         if (this.panelForm.valid) {
           this.panelService.updatePages(values.pages);
           this.panelService.updateLanguages(values.languages);
+          this.updateURL(values.pages, values.languages);
         }
       });
+
+    effect(() => {
+      const pagesOfBudgetServ = this.panelService.pages();
+      const languagesofBudgetServ = this.panelService.languages();
+
+      const pagesForm = this.panelForm.get('pages')?.value;
+      const languagesForm = this.panelForm.get('languages')?.value;
+
+      if (pagesOfBudgetServ !== pagesForm || languagesofBudgetServ !== languagesForm) {
+        this.panelForm.patchValue({
+          pages: pagesOfBudgetServ,
+          languages: languagesofBudgetServ
+        }, { emitEvent: false });
+      }
+    });
+  };
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['pages']) {
+        this.panelService.updatePages(Number(params['pages']));
+      }
+
+      if (params['languages']) {
+        this.panelService.updateLanguages(Number(params['languages']));
+      }
+    });
+  };
+
+  updateURL(pages: number, languages: number): void {
+    this.router.navigate([], {
+      queryParams: {
+        pages: pages,
+        languages: languages
+      },
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    });
   }
 
   incrementPages() {
