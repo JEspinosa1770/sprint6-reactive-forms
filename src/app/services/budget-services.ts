@@ -52,14 +52,13 @@ export class BudgetServices {
       const result = element.selected === true
         ? [...acc,
             {...element,
-              pages: element.extra ? this.panelService.pages() : 0,
-              languages: element.extra ? this.panelService.languages() : 0
+              pages: element.extra ? this.panelService.pages() : 1,
+              languages: element.extra ? this.panelService.languages() : 1
             }
           ]
         : acc;
       return result;
     }, [] as BudgetItem[]);
-
     return { result: budgetsSelecteds.length > 0, arr: budgetsSelecteds };
   }
 
@@ -76,7 +75,6 @@ export class BudgetServices {
 
     this.recordListBudgets.update(budgets => [...budgets, budgetListItem]);
 
-console.log(this.recordListBudgets())
     return budgetListItem;
   }
 }
