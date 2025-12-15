@@ -1,5 +1,5 @@
 import { computed, Injectable } from '@angular/core';
-import { BudgetServices } from './budget-services'; 
+import { BudgetServices } from './budget-services';
 import { PanelServices } from './panel-services';
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,6 @@ export class CalculateTotal {
       if (element.extra) {
         sum += this.panelService.extraCost();
       }
-
     });
     return sum;
   });
