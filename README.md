@@ -264,7 +264,7 @@ Componente *budget-list*
 
 Puede verse una demo del proyecto en su estado actual en:
 
-[Demo en GitHub Pages](https://jespinosa1770.github.io/Sprint5-Image-gallery-angular/)
+[Demo en GitHub Pages](https://jespinosa1770.github.io/sprint6-reactive-forms/)
 
 ## Contribuciones y Contacto
 Este proyecto ha sido desarrollado por **Jordi Espinosa** como parte de unos ejercicios sobre Angular.
