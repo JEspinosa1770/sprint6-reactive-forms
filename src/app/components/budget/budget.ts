@@ -12,7 +12,7 @@ import { PanelServices } from '../../services/panel-services';
 })
 
 export class Budget {
-  budget = input<BudgetItem>({ title: '', description: '', price: 0, selected: false, extra: false, pages: 0, languages: 0});
+  budget = input<BudgetItem>({ title: '', description: '', price: 0, selected: false, extra: false, pages: 1, languages: 1});
   control = input.required<FormControl<boolean | null>>();
 
   constructor(private panelService: PanelServices) {

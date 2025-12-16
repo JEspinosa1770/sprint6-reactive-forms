@@ -1,24 +1,46 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { describe, it } from 'vitest';
 import { Budget } from './budget';
 import { PanelServices } from '../../services/panel-services';
 import { BudgetItem } from '../../models/budgetItem';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { signal } from '@angular/core';
 
 describe('Budget', () => {
   let component: Budget;
   let fixture: ComponentFixture<Budget>;
   let mockPanelService: any;
+  let mockReset: any;
+  let mockRouter: any;
+  let mockActivatedRoute: any;
 
   beforeEach(async () => {
+    mockReset = vi.fn();
     mockPanelService = {
+  // MAX_PAGES: 100,
+  // MAX_LANGUAGES: 50,
+  pages: signal(1),
+  languages: signal(1),
       reset: vi.fn()
+    };
+
+    mockRouter = {
+      navigate: vi.fn().mockResolvedValue(true)
+    };
+
+    mockActivatedRoute = {
+      queryParams: of({})
     };
 
     await TestBed.configureTestingModule({
       imports: [Budget],
       providers: [
-        { provide: PanelServices, useValue: mockPanelService }
+        { provide: PanelServices, useValue: mockPanelService },
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ]
     }).compileComponents();
 
@@ -29,14 +51,16 @@ describe('Budget', () => {
   describe('Initialization', () => {
     it('should create the component with the correct default values', () => {
       expect(component).toBeTruthy();
-      
+
       const defaultBudget = component.budget();
       expect(defaultBudget).toEqual({
         title: '',
         description: '',
         price: 0,
         selected: false,
-        extra: false
+        extra: false,
+        pages: 1,
+        languages: 1
       });
     });
   });
@@ -48,11 +72,13 @@ describe('Budget', () => {
         description: 'Optimización SEO',
         price: 300,
         selected: true,
-        extra: false
+        extra: false,
+        pages: 1,
+        languages: 1
       };
 
       fixture.componentRef.setInput('budget', budgetData);
-      
+
       expect(component.budget()).toEqual(budgetData);
     });
 
@@ -62,11 +88,13 @@ describe('Budget', () => {
         description: 'Desarrollo web',
         price: 500,
         selected: false,
-        extra: true
+        extra: true,
+        pages: 1,
+        languages: 1
       };
 
       fixture.componentRef.setInput('budget', newBudget);
-      
+
       expect(component.budget().title).toBe('Web');
       expect(component.budget().price).toBe(500);
     });
@@ -75,9 +103,9 @@ describe('Budget', () => {
   describe('Input control (required)', () => {
     it('should accept a FormControl<boolean | null>', () => {
       const formControl = new FormControl<boolean | null>(false);
-      
+
       fixture.componentRef.setInput('control', formControl);
-      
+
       expect(component.control()).toBe(formControl);
     });
   });
@@ -85,6 +113,7 @@ describe('Budget', () => {
   describe('Computed showPanel', () => {
     beforeEach(() => {
       fixture.componentRef.setInput('control', new FormControl(false));
+      // fixture.detectChanges();
     });
 
     it('should return true when selected=true and extra=true', () => {
@@ -93,12 +122,14 @@ describe('Budget', () => {
         description: 'SEO',
         price: 300,
         selected: true,
-        extra: true
+        extra: true,
+        pages: 1,
+        languages: 1
       };
 
       fixture.componentRef.setInput('budget', budgetData);
       fixture.detectChanges();
-      
+
       expect(component.showPanel()).toBe(true);
     });
 
@@ -108,7 +139,9 @@ describe('Budget', () => {
         description: 'Web',
         price: 500,
         selected: false,
-        extra: true
+        extra: true,
+        pages: 1,
+        languages: 1
       };
 
       fixture.componentRef.setInput('budget', budgetData);
@@ -134,12 +167,15 @@ describe('Budget', () => {
         description: 'SEO',
         price: 300,
         selected: false,
-        extra: true
+        extra: true,
+        pages: 1,
+        languages: 1
       };
 
       fixture.componentRef.setInput('budget', budgetData);
       fixture.detectChanges();
-      
+      // TestBed.tick();
+
       expect(mockPanelService.reset).toHaveBeenCalled();
     });
   });
