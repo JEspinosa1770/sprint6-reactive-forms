@@ -71,31 +71,20 @@ export class Panel {
     });
   }
 
-  incrementPages() {
-    const currentValue = this.panelForm.get('pages')?.value || 1;
-    if (currentValue < 100) {
-      this.panelForm.patchValue({ pages: currentValue + 1 });
+  increment(field: 'pages' | 'languages') {
+    const maxValue = field === 'pages' ? this.panelService.MAX_PAGES : this.panelService.MAX_LANGUAGES;
+    const currentValue = this.panelForm.get(field)?.value || 1;
+
+    if (currentValue < maxValue) {
+      this.panelForm.patchValue({ [field]: currentValue + 1 });
     }
   }
 
-  decrementPages() {
-    const currentValue = this.panelForm.get('pages')?.value || 1;
+  decrement(field: 'pages' | 'languages') {
+    const currentValue = this.panelForm.get(field)?.value || 1;
+
     if (currentValue > 1) {
-      this.panelForm.patchValue({ pages: currentValue - 1 });
-    }
-  }
-
-  incrementLanguages() {
-    const currentValue = this.panelForm.get('languages')?.value || 1;
-    if (currentValue < 50) {
-      this.panelForm.patchValue({ languages: currentValue + 1 });
-    }
-  }
-
-  decrementLanguages() {
-    const currentValue = this.panelForm.get('languages')?.value || 1;
-    if (currentValue > 1) {
-      this.panelForm.patchValue({ languages: currentValue - 1 });
+      this.panelForm.patchValue({ [field]: currentValue - 1 });
     }
   }
 

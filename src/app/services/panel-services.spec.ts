@@ -26,7 +26,7 @@ describe('PanelServices', () => {
   it('should reset the values ​​to 1 and extraCost to 0', () => {
     service.updatePages(5);
     service.updateLanguages(4);
-    
+
     service.reset();
 
     expect(service.pages()).toBe(1);

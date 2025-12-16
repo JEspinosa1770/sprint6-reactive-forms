@@ -4,17 +4,19 @@ import { computed, Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class PanelServices {
+  readonly MAX_PAGES = 100;
+  readonly MAX_LANGUAGES = 50;
   pages = signal<number>(1);
   languages = signal<number>(1);
 
   extraCost = computed(() => {
     const pagesCount = this.pages();
     const languagesCount = this.languages();
-    
+
     if (pagesCount === 1 && languagesCount === 1) {
       return 0;
     }
-    
+
     return (pagesCount * languagesCount * 30); // fórmula del enunciado del ejercicio. Incorrecta en un caso real
   });
 
