@@ -63,9 +63,9 @@ export class BudgetForm implements OnInit {
   constructor(public serviceBudget: BudgetServices, public calculateTotal: CalculateTotal, private route: ActivatedRoute, private router: Router) {
     this.budgetForm = new FormGroup({});
     this.budgetList = new FormGroup({
-      'name_user': new FormControl('', [Validators.required]),
-      'phone_user': new FormControl('', [Validators.required]),
-      'email_user': new FormControl('', [Validators.required, Validators.email])
+      'name-user': new FormControl('', [Validators.required]),
+      'phone-user': new FormControl('', [Validators.required]),
+      'email-user': new FormControl('', [Validators.required, Validators.email])
   });
 
     this.serviceBudget.services().forEach(budget => {
