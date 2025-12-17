@@ -18,7 +18,7 @@ export class App implements OnInit {
   ngOnInit() {
     console.log('ngOnInit ejecutado');
 
-    setTimeout(() => { // para esperar a que angular termine de cargar. Apaño
+    setTimeout(() => { 
       const urlInitial = this.router.url;
 
       if (urlInitial.includes('/budget-form')) {

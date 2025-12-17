@@ -20,10 +20,8 @@ describe('Budget', () => {
   beforeEach(async () => {
     mockReset = vi.fn();
     mockPanelService = {
-  // MAX_PAGES: 100,
-  // MAX_LANGUAGES: 50,
-  pages: signal(1),
-  languages: signal(1),
+    pages: signal(1),
+    languages: signal(1),
       reset: vi.fn()
     };
 
@@ -113,7 +111,6 @@ describe('Budget', () => {
   describe('Computed showPanel', () => {
     beforeEach(() => {
       fixture.componentRef.setInput('control', new FormControl(false));
-      // fixture.detectChanges();
     });
 
     it('should return true when selected=true and extra=true', () => {
@@ -174,7 +171,6 @@ describe('Budget', () => {
 
       fixture.componentRef.setInput('budget', budgetData);
       fixture.detectChanges();
-      // TestBed.tick();
 
       expect(mockPanelService.reset).toHaveBeenCalled();
     });
